@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'book_rental/index.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function validate()
+        {
+        var days=document.getElementById("days");
+        if (days.value=="")
+            {
+             alert("please enter the values required")
+             }
+        }
+
+    </script>
+</head>
+<body>
+  <h1 >{{bookcategory}}</h1>
+  <div class="container">
+
+<button class='btn btn-default'><a href = '{% url "book_rental:add_book" bookcategory.id %}'>Add Book</a></button><br><br>
+
+Rs{{bookcategory.cost}} only per day<br><br>
+<form onsubmit="validate()" action="" method="post">
+    {% csrf_token %}
+     Number of days :<input type="text" id="days" name="days" placeholder="please enter number of days"><br>
+{% for book in books %}
+<input type="checkbox" name="books[]" value="{{book.id}}">
+{{book.book_name}}<br><br>
+{% endfor %}
+    <button class='btn btn-warning' type="submit" value="calculate">Calculate</button><br><br>
+</form>
+</div>
+</body>
+</html>
+{% endblock %}
